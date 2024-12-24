@@ -1,9 +1,8 @@
 <?php
-$_XSS_regex = "/<script.*?>.*?<\/script>|javascript:|on[a-z]+=|eval(.*?)|prompt/i";
+$_XSS_regex = "/<script.*?>.*?<\/script>|javascript:|on[a-z]+=|eval(.*?)|prompt|(?:https?|ftp)?:\/\/|((?:https?|ftp):)?\/\/|(?:mailto|file|data|javascript|vbscript|about|view-source):/i";
 
 $memcached = new Memcached();
 $memcached->addServer("127.0.0.1", 11211);
-
 foreach ($_SERVER as $key => $value) {
     XSS_test($key);
     XSS_test($value);
