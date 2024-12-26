@@ -1,9 +1,13 @@
 <?php
-$_XSS_regex = "/<script.*?>.*?<\/script>|javascript:|on[a-z]+=|eval(.*?)|prompt|(?:https?|ftp)?:\/\/|((?:https?|ftp):)?\/\/|(?:mailto|file|data|javascript|vbscript|about|view-source):/i";
+$_XSS_regex = "/<script.*?>.*?<\/script>|eval\s*\(|prompt\s*\(|alert\s*\(|on[a-z]+\s*=|(?:mailto|file|data|javascript|vbscript|about|view-source):|vbscript:|base64[\s,;]|src\s*=|href\s*=/i";
 
 $memcached = new Memcached();
 $memcached->addServer("127.0.0.1", 11211);
 foreach ($_SERVER as $key => $value) {
+    XSS_test($key);
+    XSS_test($value);
+}
+foreach ($_POST as $key => $value) {
     XSS_test($key);
     XSS_test($value);
 }
